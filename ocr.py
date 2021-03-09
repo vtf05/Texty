@@ -2,9 +2,9 @@ import numpy
 # scipy.special for the sigmoid function expit()
 import scipy.special
 # library for plotting arrays
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 # ensure the plots are inside this notebook, not an external window
-
+from .Process import process
 
 # neural network class definition
 class neuralNetwork:
@@ -82,24 +82,23 @@ class neuralNetwork:
 
 # number of input, hidden and output nodes
 input_nodes = 784
-hidden_nodes = 200
+hidden_nodes = 300
 output_nodes = 10
 
 # learning rate
-learning_rate = 0.1
+learning_rate = 0.2
 
 # create instance of neural network
 n = neuralNetwork(input_nodes,hidden_nodes,output_nodes, learning_rate)
 
 # load the mnist training data CSV file into a list
-training_data_file = open("mnist_train_100.csv", 'r')
+training_data_file = open("mnist_train.csv", 'r')
 training_data_list = training_data_file.readlines()
 training_data_file.close()
 
-# train the neural network
 
 # epochs is the number of times the training data set is used for training
-epochs = 10
+epochs = 2
 
 for e in range(epochs):
     # go through all records in the training data set
@@ -114,13 +113,18 @@ for e in range(epochs):
         targets[int(all_values[0])] = 0.99
         n.train(inputs, targets)
         pass
+    print("first done")
     pass
 
 # load the mnist test data CSV file into a list
-test_data_file = open("mnist_train_100.csv", 'r')
+test_data_file = open("mnist_test.csv", 'r')
 test_data_list = test_data_file.readlines()
 test_data_file.close()
 
+# all_values = data_list [0].split(',')
+# image_array = numpy.asfarray( all_values [1:]).reshape((28,28))
+# matplotlib.pyplot.imshow( image_array , cmap='Greys',
+# interpolation='None')
 
 scorecard = []
 
@@ -147,6 +151,15 @@ for record in test_data_list:
     
     pass
 
+
 # calculate the performance score, the fraction of correct answers
 scorecard_array = numpy.asarray(scorecard)
 print ("performance = ", scorecard_array.sum() / scorecard_array.size)
+
+# img=Image.open('74993823-8727c680-544c-11ea-96d4-c656e70c54b3.jpg ')
+# img_array=process(img)
+# img_data = 255.0 - img_array.reshape( 784 )
+# img_data = (img_data / 255.0 * 0.99 ) + 0.01
+# op=n.query(img_data)
+# label = numpy.argmax(op)
+# print(label)
